@@ -1,2 +1,20 @@
-# Travel-Management-System
-The Travel Management System is a Java-based console application designed to simplify and automate the process of managing travel bookings. The system enables users to view available trips, book seats for a selected destination, and review their booking history. 
+# Travel Management System
+
+A simple Java-based console application for managing travel bookings.
+
+## Features
+
+- View available travel packages
+- Book seats
+- View all bookings
+
+## Technologies
+
+- Java (Core)
+- OOP Concepts
+- Collections Framework
+
+## How to Run
+
+1. Open the project in any IDE (e.g., IntelliJ IDEA, Eclipse)
+2. Compile and run `TravelManagementSystem.java`
