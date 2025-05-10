@@ -1,0 +1,122 @@
+import java.util.*;
+
+class TravelPackage {
+    int id;
+    String destination;
+    double price;
+    int availableSeats;
+
+    public TravelPackage(int id, String destination, double price, int seats) {
+        this.id = id;
+        this.destination = destination;
+        this.price = price;
+        this.availableSeats = seats;
+    }
+
+    public boolean book(int seats) {
+        if (seats <= availableSeats) {
+            availableSeats -= seats;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + " | Destination: " + destination + " | Price: $" + price + " | Seats Left: " + availableSeats;
+    }
+}
+
+class Booking {
+    String customerName;
+    int packageId;
+    int seats;
+
+    public Booking(String name, int packageId, int seats) {
+        this.customerName = name;
+        this.packageId = packageId;
+        this.seats = seats;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer: " + customerName + " | Package ID: " + packageId + " | Seats Booked: " + seats;
+    }
+}
+
+public class TravelManagementSystem {
+    static Map<Integer, TravelPackage> packages = new HashMap<>();
+    static List<Booking> bookings = new ArrayList<>();
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        initializePackages();
+
+        while (true) {
+            System.out.println("\n--- Travel Management System ---");
+            System.out.println("1. View Travel Packages");
+            System.out.println("2. Book Travel");
+            System.out.println("3. View Bookings");
+            System.out.println("4. Exit");
+            System.out.print("Choose option: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1: viewPackages(); break;
+                case 2: bookTravel(); break;
+                case 3: viewBookings(); break;
+                case 4: System.out.println("Exiting system. Thank you!"); return;
+                default: System.out.println("Invalid choice.");
+            }
+        }
+    }
+
+    static void initializePackages() {
+        packages.put(1, new TravelPackage(1, "Paris", 1200.00, 10));
+        packages.put(2, new TravelPackage(2, "New York", 1000.00, 8));
+        packages.put(3, new TravelPackage(3, "Tokyo", 1500.00, 5));
+    }
+
+    static void viewPackages() {
+        System.out.println("\nAvailable Travel Packages:");
+        for (TravelPackage p : packages.values()) {
+            System.out.println(p);
+        }
+    }
+
+    static void bookTravel() {
+        System.out.print("Enter your name: ");
+        scanner.nextLine(); // consume newline
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Package ID to book: ");
+        int id = scanner.nextInt();
+        TravelPackage pack = packages.get(id);
+
+        if (pack == null) {
+            System.out.println("Invalid Package ID.");
+            return;
+        }
+
+        System.out.print("Enter number of seats: ");
+        int seats = scanner.nextInt();
+
+        if (pack.book(seats)) {
+            bookings.add(new Booking(name, id, seats));
+            System.out.println("Booking successful!");
+        } else {
+            System.out.println("Not enough seats available.");
+        }
+    }
+
+    static void viewBookings() {
+        System.out.println("\nAll Bookings:");
+        if (bookings.isEmpty()) {
+            System.out.println("No bookings yet.");
+        } else {
+            for (Booking b : bookings) {
+                System.out.println(b);
+            }
+        }
+    }
+}
